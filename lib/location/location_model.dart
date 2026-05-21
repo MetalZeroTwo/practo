@@ -1,6 +1,9 @@
 class LocationModel {
   final String city;
-  final String admin_name;
+  final String adminName;
 
-  LocationModel({required this.city, required this.admin_name});
+  LocationModel({
+    required this.city,
+    required this.adminName
+  });
 }

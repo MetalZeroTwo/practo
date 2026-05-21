@@ -1,7 +1,7 @@
-import 'package:practo/location/location_model.dart';
 import 'package:flutter/services.dart';
 import 'package:csv/csv.dart';
 
+import 'location_model.dart';
 
 class LocationController {
 
@@ -9,16 +9,13 @@ class LocationController {
 
   Future<void> loadLocations() async {
 
-    // Load CSV file as string
-    final rawData = await rootBundle.loadString(
-      'lib/features/location/data/in.csv',
+    String rawData = await rootBundle.loadString(
+      'lib/location/data/in.csv',
     );
 
-    // Convert CSV string into List
     List<List<dynamic>> csvTable =
-    const CsvToListConverter().convert(rawData);
-
-    // Skip header row
+    //csvToListConverter().convert(rawData);
+    csv.decode(rawData);
     for (int i = 1; i < csvTable.length; i++) {
 
       final row = csvTable[i];
