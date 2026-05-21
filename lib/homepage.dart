@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practo/location/location_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,16 +18,24 @@ class _HomePageState extends State<HomePage> {
         child: AppBar(
           elevation: 0,
           backgroundColor: Color(0x66bfbcfc),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          title: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LocationView()),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-            Icon(Icons.location_pin),
+                Icon(Icons.location_pin),
                 Text("XCVBNM"),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  //child: DropdownButton(items: items, onChanged: onChanged),
-                ),
-            ]
+                // Container(
+                //   padding: EdgeInsets.all(5),
+                //   child: DropdownButton(items: items, onChanged: onChanged),
+                // ),
+              ],
+            ),
           ),
         ),
       ),
