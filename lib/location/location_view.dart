@@ -38,7 +38,7 @@ class _LocationViewState extends State<LocationView> {
               Navigator.pop(context);
             },
           ),
-          leadingWidth: 20,
+          //leadingWidth: 20,
           centerTitle: false,
           title: Text("Enter your city", style: TextStyle(color: Colors.white)),
         ),
@@ -60,6 +60,26 @@ class _LocationViewState extends State<LocationView> {
                     controller.locations.isNotEmpty
                         ? controller.locations[0].city
                         : "Loading..."
+                  ),
+                ),
+              ),
+            ),
+            onTap: () {
+              Navigator.pop(context,controller.locations[0].city);
+            },
+          ),
+
+          InkWell(
+            child: Ink(
+              color: Colors.blueAccent,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: AlignmentGeometry.centerLeft,
+                  child: Text(
+                      controller.locations.isNotEmpty
+                          ? controller.locations[1].city
+                          : "Loading..."
                   ),
                 ),
               ),
