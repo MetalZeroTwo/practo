@@ -56,7 +56,11 @@ class _LocationViewState extends State<LocationView> {
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: AlignmentGeometry.centerLeft,
-                  child: Text("oooooonnnnnnneeeeeee"),
+                  child: Text(
+                    controller.locations.isNotEmpty
+                        ? controller.locations[0].city
+                        : "Loading..."
+                  ),
                 ),
               ),
             ),

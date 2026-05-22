@@ -11,7 +11,7 @@ class LocationController {
 
 
     String rawData = await rootBundle.loadString(       //Loading the CSV file
-      'lib/location/data/in.csv',
+      'assets/in.csv',
     );
 
     List<List<dynamic>> csvTable =                      //Loads the incoming String CSV data into a list named-csvTable
