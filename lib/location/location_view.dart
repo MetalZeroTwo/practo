@@ -30,120 +30,131 @@ class _LocationViewState extends State<LocationView> {
         preferredSize: Size.fromHeight(60),
         child: AppBar(
           elevation: 0,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.blueAccent,
           leading: IconButton(
             tooltip: "Close",
-            icon: Icon(Icons.close),
+            icon: Icon(Icons.close, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          //leadingWidth: 20,
           centerTitle: false,
+
           title: Text("Enter your city", style: TextStyle(color: Colors.white)),
         ),
       ),
 
-      body: Column(
-        //spacing: 10,
-        mainAxisAlignment: MainAxisAlignment.start,
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          InkWell(
+      body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: controller.locations.length,
+        itemBuilder: (BuildContext context, int index) {
+          final location = controller.locations[index];
+          return InkWell(
             child: Ink(
-              color: Colors.blueAccent,
+              //color: Colors.blueAccent,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: AlignmentGeometry.centerLeft,
-                  child: Text(
-                    controller.locations.isNotEmpty
-                        ? controller.locations[0].city
-                        : "Loading..."
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.locations.isNotEmpty
+                            ? location.city
+                            : "Loading...",
+                      ),
+                      Text(", "),
+                      Text(
+                        controller.locations.isNotEmpty
+                            ? location.adminName
+                            : "Loading...",
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
             onTap: () {
-              Navigator.pop(context,controller.locations[0].city);
+              Navigator.pop(context, {
+                "city": location.city,
+                "adminName": location.adminName,
+              });
             },
-          ),
-
-          InkWell(
-            child: Ink(
-              color: Colors.blueAccent,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: AlignmentGeometry.centerLeft,
-                  child: Text(
-                      controller.locations.isNotEmpty
-                          ? controller.locations[1].city
-                          : "Loading..."
-                  ),
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-
-          // InkWell(
-          //   child: Ink(
-          //     color: Colors.blueAccent,
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Align(
-          //         alignment: AlignmentGeometry.centerLeft,
-          //         child: Text(),
-          //       ),
-          //     ),
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context,LocationController());
-          //   },
-          // ),
-          //
-          // InkWell(
-          //   child: Ink(
-          //     color: Colors.blueAccent,
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Align(
-          //         alignment: AlignmentGeometry.centerLeft,
-          //         child: Text("oooooonnnnnnneeeeeee"),
-          //       ),
-          //     ),
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-          //
-          // Container(
-          //   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(
-          //     shape: BoxShape.rectangle,
-          //     color: Colors.blueAccent,
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          //   child: Text("tttttttwwwwwwwwwooooooooo"),
-          // ),
-          //
-          // Container(
-          //   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(
-          //     shape: BoxShape.rectangle,
-          //     color: Colors.white,
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          //   child: Text("tttthhhhhrrrreeeeee"),
-          // ),
-        ],
+          );
+        },
       ),
+
+      //
+      // InkWell(
+      //   child: Ink(
+      //     color: Colors.blueAccent,
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: Align(
+      //         alignment: AlignmentGeometry.centerLeft,
+      //         child: Row(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           children: [
+      //             Text(
+      //               controller.locations.isNotEmpty
+      //                   ? controller.locations[1].city
+      //                   : "Loading...",
+      //             ),
+      //             Text(", "),
+      //             Text(
+      //               controller.locations.isNotEmpty
+      //                   ? controller.locations[1].adminName
+      //                   : "Loading...",
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //   onTap: () {
+      //     Navigator.pop(context, {
+      //       "city": controller.locations[1].city,
+      //       "adminName": controller.locations[1].adminName,
+      //     });
+      //     //Navigator.pop(context, [controller.locations[1].city,controller.locations[1].adminName]);
+      //   },
+      // ),
+      //
+      // InkWell(
+      //   child: Ink(
+      //     color: Colors.blueAccent,
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: Align(
+      //         alignment: AlignmentGeometry.centerLeft,
+      //         child: Row(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           children: [
+      //             Text(
+      //               controller.locations.isNotEmpty
+      //                   ? controller.locations[0].city
+      //                   : "Loading...",
+      //             ),
+      //             Text(", "),
+      //             Text(
+      //               controller.locations.isNotEmpty
+      //                   ? controller.locations[0].adminName
+      //                   : "Loading...",
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //   onTap: () {
+      //     Navigator.pop(context, {
+      //       "city": controller.locations[0].city,
+      //       "adminName": controller.locations[0].adminName,
+      //     });
+      //     //Navigator.pop(context, [controller.locations[1].city,controller.locations[1].adminName]);
+      //   },
+      // ),
     );
   }
 }

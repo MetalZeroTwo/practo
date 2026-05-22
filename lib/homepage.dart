@@ -9,7 +9,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? selectedLocation;
+  // String? selectedLocation;
+  //String? locations;
+  String? city;
+  String? adminName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,21 +29,31 @@ class _HomePageState extends State<HomePage> {
               );
               if (result != null) {
                 setState(() {
-                  selectedLocation = result;
+                  city = result["city"];
+                  adminName = result["adminName"];
                 });
               }
             },
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(Icons.location_pin),
-                Text(selectedLocation ?? "Select City"),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  //child: DropdownButton(items: items, onChanged: onChanged),
-                ),
-              ],
+            child: Container(
+              //decoration: BoxDecoration(color: Colors.white),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.location_on_sharp, applyTextScaling: true),
+                  SizedBox(width: 5),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [Text(city ?? "Select City!")],
+                      ),
+                      Text(adminName ?? "", style: TextStyle(fontSize: 13)),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
