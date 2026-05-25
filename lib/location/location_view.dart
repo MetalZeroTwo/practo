@@ -12,8 +12,6 @@ class LocationView extends StatefulWidget {
 class _LocationViewState extends State<LocationView> {
   LocationController controller = LocationController();
   List<LocationModel> filteredLocations = [];
-  Filter filter = Filter();
-  // String? selectedLocation;
 
   @override
   void initState() {
@@ -43,7 +41,6 @@ class _LocationViewState extends State<LocationView> {
             },
           ),
           centerTitle: false,
-
           title: Text("Enter your city", style: TextStyle(color: Colors.white)),
         ),
       ),
@@ -65,10 +62,7 @@ class _LocationViewState extends State<LocationView> {
             // maxLength: 30,
             onChanged: (val) {
               setState(() {
-                filteredLocations = filter.filterCities(
-                  val,
-                  controller.locations,
-                );
+                filteredLocations = controller.filterCities(val);
               });
             },
           ),
@@ -77,9 +71,9 @@ class _LocationViewState extends State<LocationView> {
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: controller.locations.length,
+              itemCount: filteredLocations.length,
               itemBuilder: (BuildContext context, int index) {
-                final location = controller.locations[index];
+                final location = filteredLocations[index];
                 return InkWell(
                   child: Ink(
                     //color: Colors.blueAccent,

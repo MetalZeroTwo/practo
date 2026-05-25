@@ -26,18 +26,10 @@ class LocationController {
       );
     }
   }
-}
 
-
-class Filter {
-  List<LocationController>filterCities(
-      String val,
-      List<LocationModel> locations,
-      ) {
-    return LocationController.where((location) {
-      return location.city.toLowerCase().contains(
-        val.toLowerCase(),
-      );
+  List<LocationModel> filterCities(String val) {
+    return locations.where((location) {
+      return location.city.toLowerCase().contains(val.toLowerCase());
     }).toList();
   }
 }

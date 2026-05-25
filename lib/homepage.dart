@@ -9,8 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // String? selectedLocation;
-  //String? locations;
   String? city;
   String? adminName;
   @override
@@ -38,11 +36,12 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.location_on_sharp, applyTextScaling: true),
+                Icon(Icons.location_on_sharp, applyTextScaling: true, size: 30),
                 SizedBox(width: 5),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [Text(city ?? "Select City!")],
@@ -53,6 +52,94 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+        ),
+      ),
+
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              //Cards below app bar
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          left: 10,
+                          right: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.lightBlueAccent,
+                          ),
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "In Person Consultation",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              softWrap: true,
+                            ),
+                            Image.asset(
+                              'assets/images/smartphone.png',
+                              height: 20,
+                              width: 20,
+                              fit: BoxFit.contain,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Flexible(
+                    //   child: Container(
+                    //     padding: EdgeInsets.only(
+                    //       top: 30,
+                    //       bottom: 30,
+                    //       left: 50,
+                    //       right: 50,
+                    //     ),
+                    //     decoration: BoxDecoration(
+                    //       border: Border.all(
+                    //         width: 1,
+                    //         color: Colors.lightBlueAccent,
+                    //       ),
+                    //       color: Colors.lightGreen,
+                    //       gradient: LinearGradient(
+                    //         begin: Alignment.bottomLeft,
+                    //         end: Alignment.topRight,
+                    //         colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
+                    //       ),
+                    //       borderRadius: BorderRadius.circular(15),
+                    //     ),
+                    //     child: Text(
+                    //       "In Person Consultation",
+                    //       style: TextStyle(fontWeight: FontWeight.bold),
+                    //       softWrap: true,
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
