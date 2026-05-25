@@ -70,12 +70,12 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Flexible(
                       child: Container(
-                        padding: EdgeInsets.only(
-                          top: 10,
-                          bottom: 10,
-                          left: 10,
-                          right: 10,
-                        ),
+                        // padding: EdgeInsets.only(
+                        //   top: 10,
+                        //   bottom: 10,
+                        //   left: 10,
+                        //   right: 10,
+                        // ),
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 1,
@@ -92,14 +92,14 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              "In Person Consultation",
+                              "In Person",
                               style: TextStyle(fontWeight: FontWeight.bold),
                               softWrap: true,
                             ),
                             Image.asset(
                               'assets/images/smartphone.png',
-                              height: 20,
-                              width: 20,
+                              height: 90,
+                              //width: 20,
                               fit: BoxFit.contain,
                             ),
                           ],
@@ -107,34 +107,44 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
 
-                    // Flexible(
-                    //   child: Container(
-                    //     padding: EdgeInsets.only(
-                    //       top: 30,
-                    //       bottom: 30,
-                    //       left: 50,
-                    //       right: 50,
-                    //     ),
-                    //     decoration: BoxDecoration(
-                    //       border: Border.all(
-                    //         width: 1,
-                    //         color: Colors.lightBlueAccent,
-                    //       ),
-                    //       color: Colors.lightGreen,
-                    //       gradient: LinearGradient(
-                    //         begin: Alignment.bottomLeft,
-                    //         end: Alignment.topRight,
-                    //         colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(15),
-                    //     ),
-                    //     child: Text(
-                    //       "In Person Consultation",
-                    //       style: TextStyle(fontWeight: FontWeight.bold),
-                    //       softWrap: true,
-                    //     ),
-                    //   ),
-                    // ),
+                    Flexible(
+                      child: Container(
+                        // padding: EdgeInsets.only(
+                        //   top: 10,
+                        //   bottom: 10,
+                        //   left: 10,
+                        //   right: 10,
+                        // ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.lightBlueAccent,
+                          ),
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "In",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              softWrap: true,
+                            ),
+                            Image.asset(
+                              'assets/images/smartphone.png',
+                              height: 90,
+                              //width: 20,
+                              fit: BoxFit.contain,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],

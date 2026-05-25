@@ -48,23 +48,26 @@ class _LocationViewState extends State<LocationView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+          //SizedBox(height: 10),
 
-          TextField(
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10),
-              hintText: "Enter City name here",
-              prefixIcon: Icon(Icons.search_sharp),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+          Container(
+            padding: EdgeInsets.only(top: 8,bottom: 8, left: 8,right: 8),
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                hintText: "Enter City name here",
+                prefixIcon: Icon(Icons.search_sharp),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
+              // maxLength: 30,
+              onChanged: (val) {
+                setState(() {
+                  filteredLocations = controller.filterCities(val);
+                });
+              },
             ),
-            // maxLength: 30,
-            onChanged: (val) {
-              setState(() {
-                filteredLocations = controller.filterCities(val);
-              });
-            },
           ),
 
           Expanded(
