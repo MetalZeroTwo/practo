@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practo/location/location_controller.dart';
+import 'location_model.dart';
 
 class LocationView extends StatefulWidget {
   const LocationView({super.key});
@@ -10,7 +11,9 @@ class LocationView extends StatefulWidget {
 
 class _LocationViewState extends State<LocationView> {
   LocationController controller = LocationController();
-  String? selectedLocation;
+  List<LocationModel> filteredLocations = [];
+  Filter filter = Filter();
+  // String? selectedLocation;
 
   @override
   void initState() {
@@ -20,6 +23,7 @@ class _LocationViewState extends State<LocationView> {
 
   Future<void> loadData() async {
     await controller.loadLocations();
+    filteredLocations = controller.locations;
     setState(() {});
   }
 
@@ -44,45 +48,75 @@ class _LocationViewState extends State<LocationView> {
         ),
       ),
 
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: controller.locations.length,
-        itemBuilder: (BuildContext context, int index) {
-          final location = controller.locations[index];
-          return InkWell(
-            child: Ink(
-              //color: Colors.blueAccent,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: AlignmentGeometry.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        controller.locations.isNotEmpty
-                            ? location.city
-                            : "Loading...",
-                      ),
-                      Text(", "),
-                      Text(
-                        controller.locations.isNotEmpty
-                            ? location.adminName
-                            : "Loading...",
-                      ),
-                    ],
-                  ),
-                ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(height: 10),
+
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(10),
+              hintText: "Enter City name here",
+              prefixIcon: Icon(Icons.search_sharp),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
               ),
             ),
-            onTap: () {
-              Navigator.pop(context, {
-                "city": location.city,
-                "adminName": location.adminName,
+            // maxLength: 30,
+            onChanged: (val) {
+              setState(() {
+                filteredLocations = filter.filterCities(
+                  val,
+                  controller.locations,
+                );
               });
             },
-          );
-        },
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: controller.locations.length,
+              itemBuilder: (BuildContext context, int index) {
+                final location = controller.locations[index];
+                return InkWell(
+                  child: Ink(
+                    //color: Colors.blueAccent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: AlignmentGeometry.centerLeft,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.locations.isNotEmpty
+                                  ? location.city
+                                  : "Loading...",
+                            ),
+                            Text(", "),
+                            Text(
+                              controller.locations.isNotEmpty
+                                  ? location.adminName
+                                  : "Loading...",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context, {
+                      "city": location.city,
+                      "adminName": location.adminName,
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
 
       //
@@ -121,40 +155,6 @@ class _LocationViewState extends State<LocationView> {
       //   },
       // ),
       //
-      // InkWell(
-      //   child: Ink(
-      //     color: Colors.blueAccent,
-      //     child: Padding(
-      //       padding: const EdgeInsets.all(8.0),
-      //       child: Align(
-      //         alignment: AlignmentGeometry.centerLeft,
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           children: [
-      //             Text(
-      //               controller.locations.isNotEmpty
-      //                   ? controller.locations[0].city
-      //                   : "Loading...",
-      //             ),
-      //             Text(", "),
-      //             Text(
-      //               controller.locations.isNotEmpty
-      //                   ? controller.locations[0].adminName
-      //                   : "Loading...",
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   onTap: () {
-      //     Navigator.pop(context, {
-      //       "city": controller.locations[0].city,
-      //       "adminName": controller.locations[0].adminName,
-      //     });
-      //     //Navigator.pop(context, [controller.locations[1].city,controller.locations[1].adminName]);
-      //   },
-      // ),
     );
   }
 }

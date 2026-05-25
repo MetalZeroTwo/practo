@@ -35,25 +35,22 @@ class _HomePageState extends State<HomePage> {
               }
             },
 
-            child: Container(
-              //decoration: BoxDecoration(color: Colors.white),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Icon(Icons.location_on_sharp, applyTextScaling: true),
-                  SizedBox(width: 5),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Text(city ?? "Select City!")],
-                      ),
-                      Text(adminName ?? "", style: TextStyle(fontSize: 13)),
-                    ],
-                  ),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.location_on_sharp, applyTextScaling: true),
+                SizedBox(width: 5),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [Text(city ?? "Select City!")],
+                    ),
+                    Text(adminName ?? "", style: TextStyle(fontSize: 13)),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
