@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practo/location/location_view.dart';
+import 'package:practo/location/location_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,11 +10,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final CarouselController carouselController = CarouselController(
+    initialItem: 1,
+  );
+
+  final LocationController controller = LocationController();
   String? city;
   String? adminName;
   @override
+  void dispose() {
+    carouselController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
         child: AppBar(
@@ -41,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(height: 12),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [Text(city ?? "Select City!")],
@@ -56,99 +68,275 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+        padding: EdgeInsets.only(top: 5, left: 5, right: 5),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              //Cards below app bar
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        // padding: EdgeInsets.only(
-                        //   top: 10,
-                        //   bottom: 10,
-                        //   left: 10,
-                        //   right: 10,
-                        // ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.lightBlueAccent,
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.all(10),
+              elevation: 0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 1,
                           ),
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "In Person",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              softWrap: true,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.grey),
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
                             ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "In-Person Consultation",
+                                  softWrap: true,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+
+                              SizedBox(width: 10),
+
+                              Image.asset(
+                                'assets/images/doctorsymbol.png',
+                                height: 80,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 5),
+
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.grey),
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Video      Consultation",
+                                  softWrap: true,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+
+                              SizedBox(width: 10),
+
+                              Image.asset(
+                                'assets/images/smartphone.png',
+                                height: 80,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Wrap(
+                    spacing: 5, //horizontal space
+                    runSpacing: 5, //vertical spacing
+                    alignment: WrapAlignment.spaceEvenly,
+                    children: List.generate(controller.service.length, (index) {
+                      return Container(
+                        width: 89, //revisit
+                        //height: 90,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
                             Image.asset(
-                              'assets/images/smartphone.png',
-                              height: 90,
-                              //width: 20,
-                              fit: BoxFit.contain,
+                              controller.service[index]["image"]!,
+                              height: 45,
+                            ),
+
+                            Text(
+                              controller.service[index]["title"]!,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                              softWrap: true,
                             ),
                           ],
                         ),
+                      );
+                    }),
+                  ),
+                ],
+              ),
+            ),
+            Text("HI hello How are you champ!"),
+
+            // Container(
+            //   padding: EdgeInsets.all(25),
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(12),
+            //     gradient: LinearGradient(
+            //       begin: AlignmentGeometry.bottomLeft,
+            //       end: AlignmentGeometry.topRight,
+            //       colors: [Colors.lightBlueAccent, Colors.blueAccent],
+            //     ),
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     //crossAxisAlignment: CrossAxisAlignment.end,
+            //     children: [
+            //       Text("Dental Care" ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,),),
+            //       Text("Flat 20% Off" ,style: TextStyle(fontSize: 18),),
+            //     ],
+            //   ),
+            // ),
+
+            //------------------------------------------
+            SizedBox(
+              height: 180,
+
+              child: CarouselView.weighted(
+                controller: carouselController,
+
+                flexWeights: const [1, 8, 1],
+                itemSnapping: true,
+
+                children: controller.scrollData.map((sd) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.all(20),
+
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+
+                      gradient: const LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+
+                        colors: [Colors.lightBlueAccent, Colors.blueAccent],
                       ),
                     ),
 
-                    Flexible(
-                      child: Container(
-                        // padding: EdgeInsets.only(
-                        //   top: 10,
-                        //   bottom: 10,
-                        //   left: 10,
-                        //   right: 10,
-                        // ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.lightBlueAccent,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+                              Text(
+                                sd["title"] ?? "",
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+
+                              const SizedBox(height: 8),
+
+                              Text(
+                                sd["info"] ?? "",
+                                softWrap: true,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [Color(0xFFc9e7ff), Color(0x66bfbcfc)],
-                          ),
-                          borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "In",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              softWrap: true,
-                            ),
-                            Image.asset(
-                              'assets/images/smartphone.png',
-                              height: 90,
-                              //width: 20,
-                              fit: BoxFit.contain,
-                            ),
-                          ],
+
+                        const SizedBox(width: 10),
+
+                        Image.asset(sd["image"] ?? "", height: 80, fit: BoxFit.contain,
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  );
+                }
+                ).toList(),
+              ),
             ),
+
+            // SizedBox(
+            //   height: 120, //width: 500,
+            //   child: ListView.builder(
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: controller.scrollData.length,
+            //     itemBuilder: (BuildContext context, int index) {
+            //       final sd = controller.scrollData[index];
+            //       return Container(
+            //         width: 350,
+            //         margin: EdgeInsets.only(right: 10),
+            //         padding: EdgeInsets.all(15),
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(12),
+            //           gradient: LinearGradient(
+            //             begin: AlignmentGeometry.bottomLeft,
+            //             end: AlignmentGeometry.topRight,
+            //             colors: [Colors.lightBlueAccent, Colors.blueAccent],
+            //           ),
+            //         ),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Expanded(
+            //               child: Column(
+            //                 crossAxisAlignment: CrossAxisAlignment.start,
+            //                 children: [
+            //                   Text(
+            //                     sd["title"]!,
+            //                     style: TextStyle(
+            //                       fontWeight: FontWeight.bold,
+            //                       fontSize: 25,
+            //                     ),
+            //                   ),
+            //                   Text(sd["info"]!, style: TextStyle(fontSize: 18),softWrap: true,),
+            //                 ],
+            //               ),
+            //             ),
+            //             Image.asset(sd["image"]!, height: 80,),
+            //           ],
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
