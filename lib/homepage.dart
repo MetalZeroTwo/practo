@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:practo/location/location_view.dart';
 import 'package:practo/location/location_controller.dart';
@@ -11,13 +13,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final CarouselController carouselController = CarouselController(
-    initialItem: 1,
+    initialItem: 0,
   );
 
   final LocationController controller = LocationController();
+  late Timer _timer;
+  int currentIndex = 0;
   String? city;
   String? adminName;
   @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      currentIndex++;
+      if (currentIndex >= controller.scrollData.length) {
+        currentIndex = 0;
+      }
+      carouselController.animateToItem(
+        currentIndex,
+        duration: Duration(seconds: 2),
+        curve: Curves.easeInOut,
+      );
+    }
+    );
+  }
+
   void dispose() {
     carouselController.dispose();
     super.dispose();
@@ -68,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 5, left: 5, right: 5),
+        padding: EdgeInsets.only(top: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -144,8 +165,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
 
-                              SizedBox(width: 10),
-
                               Image.asset(
                                 'assets/images/smartphone.png',
                                 height: 80,
@@ -160,12 +179,12 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 10),
 
                   Wrap(
-                    spacing: 5, //horizontal space
-                    runSpacing: 5, //vertical spacing
+                    spacing: 5, //space between the cards
+                    runSpacing: 7, //vertical spacing abpve the cards
                     alignment: WrapAlignment.spaceEvenly,
                     children: List.generate(controller.service.length, (index) {
                       return Container(
-                        width: 89, //revisit
+                        width: 89, //Revisit - width of the cards
                         //height: 90,
                         padding: EdgeInsets.symmetric(
                           vertical: 10,
@@ -201,8 +220,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Text("HI hello How are you champ!"),
+            //  Text("HI hello How are you champ!"),
 
+            //Example container as structure for carosuelView.builder.
             // Container(
             //   padding: EdgeInsets.all(25),
             //   decoration: BoxDecoration(
@@ -226,17 +246,16 @@ class _HomePageState extends State<HomePage> {
             //------------------------------------------
             SizedBox(
               height: 180,
-
               child: CarouselView.weighted(
                 controller: carouselController,
 
-                flexWeights: const [1, 8, 1],
+                flexWeights: const [1, 10, 1],
                 itemSnapping: true,
 
                 children: controller.scrollData.map((sd) {
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(15),
 
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -260,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 sd["title"] ?? "",
                                 style: const TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 26,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -272,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                                 sd["info"] ?? "",
                                 softWrap: true,
                                 style: const TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 18,
                                   color: Colors.white,
                                 ),
                               ),
@@ -282,13 +301,15 @@ class _HomePageState extends State<HomePage> {
 
                         const SizedBox(width: 10),
 
-                        Image.asset(sd["image"] ?? "", height: 80, fit: BoxFit.contain,
+                        Image.asset(
+                          sd["image"] ?? "",
+                          height: 80,
+                          fit: BoxFit.contain,
                         ),
                       ],
                     ),
                   );
-                }
-                ).toList(),
+                }).toList(),
               ),
             ),
 

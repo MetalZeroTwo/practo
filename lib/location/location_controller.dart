@@ -40,10 +40,10 @@ class LocationController {
     {"image": "assets/images/1000090277.png", "title": "Buy Subscription"},
   ];
 
-  final List<Map<String, String>> scrollData = [
-    {"title": "Dental Care!", "info": "Flat 20% Off", "image": "assets/images/7496520e03291819644f698a032fbb39.jpg"},
-    {"title": "Skin Care", "info": "Top Specialists", "image": "assets/images/2413171.png"},
-    {"title": "Eye Care", "info": "Avail LASIK Surgery with 15% Off", "image": "assets/images/5717736.png"},
-    {"title": "Health Insurance", "info": "Best Insurances curated For You", "image": "assets/images/istockphoto-1131997007-612x612.jpg"},
+  final List<Map<String,dynamic>> scrollData = [
+    {"title": "Dental Care!", "info": "Flat 20% Off","data":"Dental care", "image": "assets/images/7496520e03291819644f698a032fbb39.jpg"},
+    {"title": "Skin Care", "info": "Top Specialists","data": "skin care", "image": "assets/images/2413171.png"},
+    {"title": "Eye Care", "info": "Avail LASIK Surgery with 15% Off", "data": "eye care", "image": "assets/images/5717736.png"},
+    {"title": "Health Insurance", "info": "Best Insurances curated For You", "data": "insurance", "image": "assets/images/istockphoto-1131997007-612x612.jpg"},
   ];
 }
